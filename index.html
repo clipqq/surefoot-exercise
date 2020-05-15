@@ -2162,16 +2162,15 @@
         ></script>
         <!-- /* Form Validation Code */ -->
         <!-- Paste this script block at the end of the html file just before the closing </body> tag.
-        This script will alert the user when required fields are left empty.
-        Email validation feature is intact and will validate email syntax only after all other fields are filled in.
-        Form will be submitted only after all fields are validated. -->
+This script will alert the user when required fields are left empty.
+Email validation feature is intact and will validate email syntax only after all other fields are filled in.
+Form will be submitted only after all fields are validated. -->
         <script>
             let nameInput = document.getElementsByName('your-name')[0]
             let messageInput = document.getElementsByName('your-message')[0]
             let emailInput = document.getElementsByName('YourEmail')[0]
             let submitButton = document.querySelectorAll('input[type=submit]')
             submitButton[0].addEventListener('click', function(e) {
-                console.log('submit clicked')
                 if (nameInput.value == '') {
                     e.preventDefault()
                     alert('Please fill in your name')
@@ -2190,8 +2189,8 @@
             })
         </script>
         <!-- /* Form Restyling Code */
-        Paste this script block at the end of the html file just before the closing </body> tag.
-        This script simply flips the  positions of the "schedule a call" and email forms.-->
+Paste this script block at the end of the html file just before the closing </body> tag.
+This script simply flips the  positions of the "schedule a call" and email forms.-->
         <script>
             function flipColumns() {
                 let formContainer = document.querySelectorAll(
@@ -2206,43 +2205,34 @@
                 flipColumns()
             }
         </script>
+
+        <!-- /* Cookie Monster Code */ 
+Paste this script block at the end of the html file just before the closing </body> tag.
+This script stops the form being re-submitted if user has been to the page before.
+-->
         <script>
-            function handleFoundUser(e) {
-                document.querySelectorAll('input[type=submit]').disabled = true
-                let responseBox = document.querySelectorAll('.wpcf7-response-output')[0]
-                responseBox.style.display = 'block'
-                responseBox.innerHTML = `<p>Hmm, you look familiar. While you're waiting for our reply, here's a GIF we think you should see.</p><br>
-                <iframe src="https://giphy.com/embed/ENagATV1Gr9eg" width="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p>Thanks for signing up!</p>
-                
-                `
-
-            }
-
-            console.log(
-                'checking cookies',
-                document.cookie,
-                document.cookie.length,
-            )
-
-            let mainForm = document.getElementsByTagName('form')[0]
-            // mainForm.addEventListener('submit', function(e) {
-            let submitBtn = document.querySelectorAll('input[type=submit]')
-            submitBtn[0].addEventListener('click', function(e) {
-                e.preventDefault()
-                console.log('submit triggered')
+            window.onload = function(e) {
+                let submitBtn = document.querySelectorAll('.wpcf7-submit')[0]
                 if (
                     document.cookie.split(';').some(function(item) {
                         return item.trim().indexOf('visitor=') == 0
                     })
                 ) {
-                    console.log('The cookie "visitor" exists (ES5)')
-                    handleFoundUser(e)
+                    handleFoundUser()
                 } else {
                     document.cookie = 'visitor=1'
-                    console.log('New visitor', document.cookie)
-                    mainForm.submit()
                 }
-            })
+                function handleFoundUser() {
+                    submitBtn.setAttribute('disabled', 'true')
+                    let responseBox = document.querySelectorAll(
+                        '.wpcf7-response-output',
+                    )[0]
+                    responseBox.style.display = 'block'
+                    responseBox.innerHTML = `<p>Hmm, you look familiar. While you're waiting for our reply, here's a GIF we think you should see.</p><br>
+                <iframe src="https://giphy.com/embed/ENagATV1Gr9eg" width="330" frameBorder="" class="giphy-embed"></iframe><p>Thanks for signing up!</p>
+                `
+                }
+            }
         </script>
     </body>
 </html>
